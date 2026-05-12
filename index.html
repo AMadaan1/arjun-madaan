@@ -3,34 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arjun Madaan | Founder & Researcher</title>
+    <title>Arjun Madaan | Computational Neuroscience & Applied AI</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
+    <div class="noise"></div>
     <div id="glow"></div>
 
     <nav>
         <div class="logo">AM.</div>
         <div class="links">
-            <a href="#thesis">Thesis</a>
-            <a href="#arsenal">Arsenal</a>
-            <a href="#operations">Operations</a>
+            <a href="#thesis" data-cursor="hover">Thesis</a>
+            <a href="#arsenal" data-cursor="hover">Arsenal</a>
+            <a href="#operations" data-cursor="hover">Operations</a>
         </div>
     </nav>
 
     <header class="hero">
-        <div class="hero-content reveal">
-            <p class="eyebrow">COMPUTATIONAL NEUROSCIENCE & APPLIED AI</p>
-            <h1 class="title">ARJUN<br>MADAAN</h1>
-            <p class="subtitle">Building continuous-time neural architectures and scaling STEM education.</p>
+        <div class="hero-wrapper">
+            <p class="eyebrow load-anim">COMPUTATIONAL NEUROSCIENCE & APPLIED AI</p>
+            <h1 class="title load-anim">ARJUN<br>MADAAN</h1>
+            <p class="subtitle load-anim">Building continuous-time neural architectures and scaling STEM education.</p>
             
-            <div class="stats-grid">
+            <div class="stats-grid load-anim">
                 <div class="stat-card">
                     <h3>99.25%</h3>
-                    <p>Diagnostic Accuracy</p>
+                    <p>Diagnostic Accuracy (Wisconsin Benchmark)</p>
                 </div>
                 <div class="stat-card">
                     <h3>Alpha STEM</h3>
@@ -38,18 +43,80 @@
                 </div>
                 <div class="stat-card">
                     <h3>143-Page</h3>
-                    <p>AI Curriculum</p>
+                    <p>Q.E.D. Math & AI Curriculum</p>
                 </div>
             </div>
         </div>
     </header>
 
     <section id="thesis" class="section">
-        <div class="section-content reveal">
-            <h2>The Thesis</h2>
-            <p class="large-text">I do not tolerate latency, redundancy, or excuses. I build systems that bridge the gap between hard biological reality and computational optimization.</p>
+        <div class="thesis-content">
+            <h2 class="section-label trigger-anim">01. The Thesis</h2>
+            <p class="large-text split-text">
+                I do not tolerate latency, redundancy, or excuses. I build systems that bridge the gap between hard biological reality and computational optimization, transitioning from discrete snapshots to continuous-time physics.
+            </p>
         </div>
     </section>
+
+    <section id="arsenal" class="section">
+        <div class="arsenal-content">
+            <h2 class="section-label trigger-anim">02. The Arsenal</h2>
+            <div class="project-grid">
+                
+                <div class="project-card trigger-anim">
+                    <div class="project-header">
+                        <span class="project-tag">PyTorch / ODE Solvers</span>
+                        <span class="project-year">2026</span>
+                    </div>
+                    <h3 class="project-title">Sepsis PINN Architecture</h3>
+                    <p class="project-desc">A Continuous-Time Liquid Neural Network (LNN) mapping highly volatile ICU data. Bounded by magneto-ionic differential equations to eradicate truncation error and biologically impossible overshoots.</p>
+                </div>
+
+                <div class="project-card trigger-anim">
+                    <div class="project-header">
+                        <span class="project-tag">Reinforcement Learning</span>
+                        <span class="project-year">AlphaCricket</span>
+                    </div>
+                    <h3 class="project-title">Biological Decision Making</h3>
+                    <p class="project-desc">A Deep RL engine trained via PyMunk physics simulation. Architected to model biological motor control pathways, achieving a 5.1 runs-per-ball optimization average.</p>
+                </div>
+
+                <div class="project-card trigger-anim">
+                    <div class="project-header">
+                        <span class="project-tag">Supervised ML</span>
+                        <span class="project-year">BioLearn</span>
+                    </div>
+                    <h3 class="project-title">Diagnostic Neural Frameworks</h3>
+                    <p class="project-desc">Engineered high-accuracy predictive models across major medical datasets, including a 99.25% accuracy rate on the Wisconsin Breast Cancer diagnostic matrix.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="operations" class="section">
+        <div class="operations-content">
+            <h2 class="section-label trigger-anim">03. Operations</h2>
+            <div class="ops-split">
+                <div class="ops-text trigger-anim">
+                    <h3 class="ops-title">Alpha STEM</h3>
+                    <p>As Founder and CEO, I architect competitive infrastructures that force high school and middle school students to operate at the university level.</p>
+                    <ul class="ops-list">
+                        <li><strong>The Q.E.D. Curriculum:</strong> Authored a 143-page textbook distilling continuous-time math, Transformer NN architecture, and Generative AI to a middle-school comprehension level.</li>
+                        <li><strong>Clinical Innovation Challenge (CIC):</strong> A rigorous, collegiate-level research competition designed to disrupt legacy county paradigms.</li>
+                        <li><strong>Executive Leadership:</strong> Manage a C-Suite overseeing event logistics, curriculum deployment, and university-level venue acquisition.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo">AM.</div>
+            <p class="footer-tag">From Equations to Excellence.</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
