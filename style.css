@@ -105,6 +105,7 @@ nav .links a:hover { color: var(--text-main); }
     display: flex;
     align-items: center;
     padding: 0 5vw;
+    padding-top: 120px; /* Forces content down below the fixed nav */
     position: relative;
     z-index: 10;
 }
