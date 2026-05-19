@@ -4,7 +4,7 @@ gsap.registerPlugin(ScrollTrigger);
 // 1. Initialize Lenis (Hardware Accelerated Smooth Scroll)
 const lenis = new Lenis({
     duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom friction easing
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
     direction: 'vertical',
     gestureDirection: 'vertical',
     smooth: true,
@@ -21,68 +21,57 @@ gsap.ticker.add((time) => {
 });
 gsap.ticker.lagSmoothing(0);
 
-// 2. Mouse Glow Tracker
-const glow = document.getElementById('glow');
-window.addEventListener('pointermove', (e) => {
-    // requestAnimationFrame handled via GSAP natively, but using Web Animations API for the glow
-    glow.animate({
-        left: `${e.clientX}px`,
-        top: `${e.clientY}px`
-    }, { duration: 3000, fill: "forwards" });
-});
 
-// 3. Initial Load Timeline (Hero Section)
+// 2. Initial Load Timeline (Hero Section)
 const tl = gsap.timeline();
 
 tl.fromTo(".load-anim", 
-    { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1.2, stagger: 0.2, ease: "power4.out", delay: 0.2 }
+    { y: 30, opacity: 0 },
+    { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power3.out", delay: 0.2 }
 );
 
-// 4. Scroll Reveal Engine
-// Animates regular elements when they enter the viewport
+// 3. Scroll Reveal Engine (Professional fade up)
 const triggerElements = document.querySelectorAll('.trigger-anim');
 
 triggerElements.forEach((el) => {
     gsap.fromTo(el,
-        { y: 60, opacity: 0 },
+        { y: 40, opacity: 0 },
         {
             y: 0,
             opacity: 1,
             duration: 1.2,
-            ease: "power3.out",
+            ease: "power2.out",
             scrollTrigger: {
                 trigger: el,
-                start: "top 85%", // Trigger when top of element hits 85% down the viewport
+                start: "top 85%", 
                 toggleActions: "play none none reverse"
             }
         }
     );
 });
 
-// 5. The "Thesis" Text Splitter effect
-// Splits the thesis paragraph into individual words for a cascading reveal
+// 4. The "Thesis" Text Splitter effect
 const splitText = document.querySelector('.split-text');
 const text = splitText.innerText;
-splitText.innerHTML = ''; // Clear existing
+splitText.innerHTML = ''; 
 
 // Wrap each word in a span for individual animation control
 text.split(' ').forEach(word => {
     const span = document.createElement('span');
     span.innerText = word + ' ';
-    span.style.opacity = '0.2'; // Base state
+    // Starts off adopting the border-color (faded grey) from CSS
     splitText.appendChild(span);
 });
 
-// Animate the words lighting up as you scroll through the section
+// Animate the words lighting up to pure black/dark grey as you scroll
 gsap.to('.split-text span', {
-    opacity: 1,
+    color: '#1A1A1A', // var(--text-main)
     stagger: 0.05,
     ease: "none",
     scrollTrigger: {
         trigger: ".thesis-content",
-        start: "top 70%",
-        end: "bottom 60%",
-        scrub: 1 // Ties the animation directly to the scrollbar
+        start: "top 75%",
+        end: "bottom 65%",
+        scrub: 1 
     }
 });
