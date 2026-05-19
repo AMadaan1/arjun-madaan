@@ -1,11 +1,10 @@
 :root {
-    /* Sophisticated Lab Palette */
-    --bg-color: #F9F9F7; /* Very soft off-white */
-    --bg-surface: #FFFFFF;
-    --text-main: #1A1A1A; /* Not pure black, easier on the eyes */
-    --text-muted: #666666;
-    --accent-color: #D9534F; /* A subtle, academic brick red/coral */
-    --border-color: rgba(0, 0, 0, 0.08);
+    /* Anthropic / Alabaster Palette */
+    --bg-color: #FAF9F6; 
+    --text-main: #1A1918; 
+    --text-muted: #6B6A68;
+    --accent-color: #C05B4D; /* Terracotta red for subtle emphasis */
+    --border-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Lenis Required CSS */
@@ -30,36 +29,27 @@ body {
 }
 
 ::selection {
-    background-color: rgba(26, 26, 26, 0.1);
+    background-color: rgba(26, 25, 24, 0.1);
     color: var(--text-main);
-}
-
-/* Subtle Gradient Background (Replacing harsh noise) */
-.gradient-bg {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.8) 0%, rgba(249,249,247,1) 70%);
-    pointer-events: none;
-    z-index: -1;
 }
 
 nav {
     position: fixed;
     top: 0; width: 100%;
-    padding: 2rem 5vw;
+    padding: 1.5rem 4vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
-    background: rgba(249, 249, 247, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(250, 249, 246, 0.9);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border-color);
 }
 
 .logo {
     font-family: 'Newsreader', serif;
     font-weight: 500;
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     letter-spacing: -0.02em;
 }
 
@@ -71,9 +61,9 @@ nav .links {
 nav .links a {
     color: var(--text-muted);
     text-decoration: none;
-    margin-left: 2.5rem;
+    margin-left: 2rem;
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 400;
     transition: color 0.3s ease;
 }
 
@@ -81,68 +71,50 @@ nav .links a:hover { color: var(--text-main); }
 
 .resume-btn {
     border: 1px solid var(--border-color);
-    padding: 0.5rem 1.2rem;
-    border-radius: 4px; /* Professional square corners, not pills */
-    transition: all 0.3s ease !important;
-}
-
-.resume-btn:hover {
-    background: var(--text-main);
-    color: var(--bg-surface) !important;
+    padding: 0.4rem 1rem;
+    border-radius: 2px; /* Very sharp, academic corners */
 }
 
 /* --- HERO SECTION --- */
 .hero {
-    min-height: 90vh;
+    min-height: 85vh;
     display: flex;
     align-items: center;
-    padding: 0 5vw;
+    padding: 0 4vw;
     padding-top: 100px; 
-    position: relative;
-    z-index: 10;
 }
 
-.hero-wrapper { max-width: 1000px; }
+.hero-wrapper { max-width: 900px; }
 
 .eyebrow {
     color: var(--text-muted);
     font-size: 0.75rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-bottom: 2rem;
-    font-weight: 600;
 }
 
 .title {
     font-family: 'Newsreader', serif;
-    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
     font-weight: 400;
-    line-height: 1.05;
+    line-height: 1.1;
     letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
+    margin-bottom: 3rem;
     color: var(--text-main);
-}
-
-.subtitle {
-    font-size: clamp(1.1rem, 1.5vw, 1.25rem);
-    color: var(--text-muted);
-    max-width: 650px;
-    margin-bottom: 4rem;
-    font-weight: 300;
 }
 
 .stats-grid {
     display: flex;
     gap: 4rem;
     border-top: 1px solid var(--border-color);
-    padding-top: 2.5rem;
+    padding-top: 2rem;
 }
 
 .stat-card h3 {
     font-size: 1rem;
     color: var(--text-main);
-    font-weight: 600;
-    margin-bottom: 0.25rem;
+    font-weight: 500;
 }
 
 .stat-card p {
@@ -152,62 +124,56 @@ nav .links a:hover { color: var(--text-main); }
 
 /* --- SECTIONS --- */
 .section {
-    padding: 8vw 5vw;
-    position: relative;
-    z-index: 10;
+    padding: 6vw 4vw;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.border-top {
+    border-top: 1px solid var(--border-color);
 }
 
 .section-label {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-main);
     margin-bottom: 3rem;
-    font-weight: 600;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1rem;
+    font-weight: 500;
 }
 
 /* Thesis */
 .large-text {
     font-family: 'Newsreader', serif;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    line-height: 1.2;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.3;
     letter-spacing: -0.02em;
-    max-width: 1200px;
+    max-width: 1000px;
     font-weight: 300;
 }
 
 .large-text span {
-    color: var(--border-color); /* Starts hidden/faded */
+    color: #D3D3D3; /* Very light grey for the scroll reveal */
     transition: color 0.4s ease;
 }
 
 /* Arsenal Grid */
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
 }
 
 .project-card {
-    background: var(--bg-surface);
-    padding: 2.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .project-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     font-size: 0.75rem;
     font-weight: 500;
 }
@@ -217,71 +183,63 @@ nav .links a:hover { color: var(--text-main); }
 
 .project-title {
     font-family: 'Newsreader', serif;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .project-desc {
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.6;
 }
 
 /* Operations */
 .ops-title {
     font-family: 'Newsreader', serif;
-    font-size: 2.5rem;
+    font-size: 2rem;
     letter-spacing: -0.02em;
     margin-bottom: 1rem;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .ops-desc {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--text-muted);
-    margin-bottom: 2.5rem;
-    max-width: 700px;
+    margin-bottom: 2rem;
+    max-width: 600px;
 }
 
 .ops-list {
     list-style: none;
-    max-width: 800px;
+    max-width: 700px;
 }
 
 .ops-list li {
-    margin-bottom: 1.5rem;
-    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
     position: relative;
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .ops-list li::before {
-    content: '—';
+    content: '•';
     position: absolute;
     left: 0;
-    color: var(--border-color);
+    color: var(--text-main);
 }
 
 .ops-list li strong {
     color: var(--text-main);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* Footer */
 footer {
-    padding: 4vw 5vw;
+    padding: 3vw 4vw;
     border-top: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--bg-surface);
-}
-
-.footer-content {
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
