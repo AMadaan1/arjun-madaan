@@ -1,245 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arjun Madaan — AI for Medicine</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Arjun Madaan — machine learning for medicine</title>
+<meta name="description" content="High school researcher working on machine learning for medicine: benchmarking medical LLMs, physics-informed models for clinical time series, and open notebooks.">
+
+<!-- Open Graph tags control what appears when someone pastes your link into
+     Slack, Discord, iMessage or a Google Doc. Without them the preview is
+     blank, which looks careless on a link you're sending to admissions
+     officers or professors. Update the og:url if you move the site. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Arjun Madaan — machine learning for medicine">
+<meta property="og:description" content="Benchmarking medical LLMs, physics-informed models for clinical time series, and open notebooks.">
+<meta property="og:url" content="https://amadaan1.github.io/arjun-madaan/">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<!-- preconnect opens the network connection to the font host early, in
+     parallel with parsing the rest of the page. Saves roughly 100–300ms on
+     first load. display=swap means text renders immediately in the fallback
+     font rather than staying invisible while the webfont downloads. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <nav>
-        <div class="logo">Arjun Madaan</div>
-        <div class="links">
-            <a href="#research">Research</a>
-            <a href="#projects">Projects</a>
-            <a href="#alpha-stem">Alpha STEM</a>
-            <a href="#contact">Contact</a>
-            <a href="https://www.kaggle.com/juniam" target="_blank" rel="noopener" class="kaggle-btn">Kaggle ↗</a>
-        </div>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ── Masthead ───────────────────────────────────────────────────────────
+     This block is identical on all four pages except for which link carries
+     aria-current="page". When you edit it, edit it everywhere. -->
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="wordmark" href="index.html">Arjun Madaan</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" aria-current="page">Index</a>
+      <a href="projects.html">Projects</a>
+      <a href="research.html">Research</a>
+      <a href="notebooks.html">Notebooks</a>
     </nav>
+  </div>
+</header>
 
-    <header class="hero">
-        <div class="hero-wrapper">
-            <p class="eyebrow load-anim">STUDENT RESEARCHER · AI FOR MEDICINE</p>
-            <h1 class="title load-anim">Building evaluation frameworks for medical AI, and the pathways for others to follow.</h1>
-            <div class="stats-grid load-anim">
-                <div class="stat-card">
-                    <h3>VJAS 2nd Place</h3>
-                    <p>Mathematics, 9th grade</p>
-                </div>
-                <div class="stat-card">
-                    <h3>PILNN Research</h3>
-                    <p>VCU mentorship, ongoing</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Alpha STEM</h3>
-                    <p>Founder & CEO</p>
-                </div>
-            </div>
-        </div>
-    </header>
+<main id="main">
 
-    <section id="thesis" class="section">
-        <div class="thesis-content">
-            <p class="large-text split-text">
-                I have one goal: to be a net good for humanity. Machine learning gives me one of the best tools to work toward that. Join me in moving from equations to excellence.
-            </p>
-        </div>
-    </section>
+  <!-- ── Hero ────────────────────────────────────────────────────────────
+       The thesis of the page. No photo, no "Hi, I'm ___ 👋", no big gradient
+       number. A sentence that says exactly what you work on, then the
+       waveform, which shows what that work looks like. -->
+  <section class="wrap hero">
+    <h1>Arjun Madaan</h1>
+    <p class="lede hero__lede">
+      I build and evaluate machine learning systems for medicine — benchmarking
+      what clinical language models actually get right, and designing models
+      that learn from physiological signals when data is scarce.
+    </p>
+    <p class="muted">
+      Tenth grade, Center for Medical Sciences, Mills E. Godwin High School.
+      Henrico County, Virginia.
+    </p>
 
-    <section id="research" class="section">
-        <div class="content-wrap">
-            <h2 class="section-label trigger-anim">Independent Research</h2>
-            <div class="research-intro trigger-anim">
-                <p>
-                    I'm a student in the Todd Allen Phillips Center for Medical Sciences at Mills E. Godwin High School,
-                    completing an Independent Research Project (IRP) under the mentorship of Dr. Jayasimha Atulasimha at VCU.
-                    The project explores whether combining Liquid Neural Networks (which adapt to noisy, continuous time-series data)
-                    with Physics-Informed Neural Networks (which perform well under data scarcity) can improve sepsis detection on
-                    the MIMIC-IV Demo dataset — only 3 of 206 patients have sepsis.
-                </p>
-            </div>
-            <div class="research-card trigger-anim">
-                <h3>Physics-Informed Liquid Neural Networks for Sepsis Classification</h3>
-                <div class="research-meta">
-                    <span class="meta-item">Mentored by Dr. Jayasimha Atulasimha, Virginia Commonwealth University</span>
-                    <span class="meta-item">In Progress — Fall 2026</span>
-                </div>
-                <div class="research-details">
-                    <div class="detail-item">
-                        <p class="detail-label">Baseline Result (Liquid Neural Network)</p>
-                        <p class="detail-text">
-                            Trained across 100 random seeds to isolate signal from noise. Mean AUPRC: ~0.154 vs. random baseline of ~0.024 
-                            (approximately 545% improvement). The true positive case was never missed across any seed.
-                        </p>
-                    </div>
-                    <div class="detail-item">
-                        <p class="detail-label">Next Steps</p>
-                        <p class="detail-text">
-                            Building PINN and PILNN variants. Potentially grounding the physics term in magneto-ionic transport equations 
-                            as a physiological analog to mitochondrial electron transport chain dynamics during septic shock.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- The signature graphic. Two channels: a noisy raw trace and a smoothed
+         model line, with an amber threshold. pathLength="1" normalises both
+         paths so a single CSS animation draws them (see styles.css §6).
+         aria-hidden because it carries no information a screen reader needs —
+         the caption below states what it is. -->
+    <svg class="trace" viewBox="0 0 1200 170" role="img" aria-hidden="true" focusable="false">
+      <line class="trace__threshold" x1="0" y1="52" x2="1200" y2="52"></line>
+      <path class="trace__raw"   pathLength="1" d="TRACE_RAW"></path>
+      <path class="trace__model" pathLength="1" d="TRACE_MODEL"></path>
+    </svg>
+    <p class="trace__caption">Illustrative — signal, smoothed estimate, threshold. Not experimental data.</p>
+  </section>
 
-    <section id="projects" class="section border-top">
-        <div class="content-wrap">
-            <h2 class="section-label trigger-anim">Projects & Notebooks</h2>
-            <div class="project-grid">
+  <!-- ── Focus ───────────────────────────────────────────────────────────
+       A "what I'm doing right now" block. This is the section that makes a
+       personal site worth more than a résumé: it's current, it's specific, and
+       it's written in your voice. Update it when the work changes; a stale
+       "currently" block is worse than none. -->
+  <section class="wrap section">
+    <div class="rail">
+      <p class="eyebrow">Currently</p>
+      <div>
+        <p>
+          Two things have my attention. The first is measurement: medical
+          language models are being evaluated on exam questions, which is not
+          the same as being evaluated on the job. I built
+          <a href="projects.html#mcait">MCAIT</a>, a ten-task benchmark that
+          scores models on diagnostic reasoning, patient interaction, ethics
+          and scientific knowledge, including simulated patient conversations,
+          and ran it across 37 models.
+        </p>
+        <p>
+          The second is architecture. Clinical time series are noisy,
+          irregularly sampled and badly imbalanced — the event you care about
+          is rare, which is exactly the condition under which ordinary networks
+          fail. I'm working on
+          <a href="research.html#pilnn">physics-informed liquid neural
+          networks</a> for early sepsis prediction, where a continuous-time
+          model with physiological constraints built into its loss should need
+          less data to get to a useful answer.
+        </p>
+      </div>
+    </div>
+  </section>
 
-                <div class="project-card trigger-anim">
-                    <div class="project-tag">Applied AI</div>
-                    <h3>Clintelligence</h3>
-                    <p class="project-desc">
-                        A two-step "parse-then-analyze" diagnostic pipeline. Unstructured patient files are converted to structured JSON 
-                        via few-shot prompting, then analyzed by a persona-prompted model — either Gemma 3n (on-device, private) or Gemini 2.5 Pro 
-                        (cloud with search). Always includes a disclaimer to consult a real professional. Built with a Gradio interface to let users 
-                        choose their model based on privacy needs.
-                    </p>
-                    <a href="https://www.kaggle.com/juniam" target="_blank" rel="noopener" class="project-link">View on Kaggle →</a>
-                </div>
+  <!-- ── Selected work ──────────────────────────────────────────────────── -->
+  <section class="wrap section">
+    <!-- A .rail containing only the eyebrow puts that label in the narrow
+         left column, where it acts as a header for the metadata column below.
+         Each record is then its own top-level .rail, so all the dates and tags
+         line up down the page. Records are never nested inside a rail column —
+         that would put a 9rem + 40rem grid inside a 40rem box and overflow. -->
+    <div class="rail"><p class="eyebrow">Selected work</p></div>
 
-                <div class="project-card trigger-anim">
-                    <div class="project-tag">Evaluation Infrastructure</div>
-                    <h3>M.C.A.I.T.</h3>
-                    <p class="project-desc">
-                        Medical & Cross-Disciplinary A.I. Test. A ten-task benchmark for rigorously evaluating LLMs in medical contexts: 
-                        foundational biology (USABO questions), rare-disease diagnosis (ITP), common-disease differentiation (pneumonia), 
-                        refusal under adversarial prompts, multi-turn differential diagnosis, implicit bias, X-ray multimodal diagnosis, 
-                        prescription quality, mental-health diagnosis, and patient interaction. Current leaderboard leaders score 0.92–0.94.
-                    </p>
-                    <a href="https://www.kaggle.com/juniam" target="_blank" rel="noopener" class="project-link">View on Kaggle →</a>
-                </div>
+    <article class="record rail">
+      <div class="record__meta">
+        <p>2026</p>
+        <p>Benchmark</p>
+        <p>37 models</p>
+      </div>
+      <div class="record__body">
+        <h3>MCAIT</h3>
+        <p>
+          A ten-task evaluation suite for medical language models, covering
+          diagnostic reasoning, ethics, scientific knowledge and agentic
+          patient simulation. Published as a Kaggle notebook suite.
+        </p>
+        <ul class="links">
+          <li><a href="projects.html#mcait">Full write-up</a></li>
+        </ul>
+      </div>
+    </article>
 
-                <div class="project-card trigger-anim">
-                    <div class="project-tag">Reinforcement Learning</div>
-                    <h3>AlphaCricket</h3>
-                    <p class="project-desc">
-                        A from-scratch RL pipeline (no pre-built environments). Custom PyMunk physics ragdoll paired with a PyTorch policy network 
-                        and lightweight advantage-weighted regression update rule. Through continuous self-play, the agent learned swing mechanics 
-                        to achieve a rolling average of 5.1 runs per ball against randomized deliveries.
-                    </p>
-                    <a href="https://www.kaggle.com/juniam" target="_blank" rel="noopener" class="project-link">View on Kaggle →</a>
-                </div>
+    <article class="record rail">
+      <div class="record__meta">
+        <p>2026—</p>
+        <p>Research</p>
+        <p class="record__status">In progress</p>
+      </div>
+      <div class="record__body">
+        <h3>Physics-informed liquid neural networks for early sepsis prediction</h3>
+        <p>
+          A continuous-time architecture with physiological constraints in the
+          loss function, aimed at severe class imbalance in ICU time series.
+          Independent research, mentored at Virginia Commonwealth University.
+        </p>
+        <ul class="links">
+          <li><a href="research.html#pilnn">Full write-up</a></li>
+        </ul>
+      </div>
+    </article>
 
-            </div>
-        </div>
-    </section>
+    <article class="record rail">
+      <div class="record__meta">
+        <p>2026—</p>
+        <p>Organisation</p>
+        <p>5 schools</p>
+      </div>
+      <div class="record__body">
+        <h3>Alpha STEM</h3>
+        <p>
+          A student-run STEM outreach group I founded, now organising chapters
+          across Henrico County schools. Ran a STEM Bowl that drew 28 students
+          from four schools.
+        </p>
+        <ul class="links">
+          <li><a href="projects.html#alpha-stem">Full write-up</a></li>
+          <li><a href="https://amadaan1.github.io/alpha-stem" target="_blank" rel="noopener">alpha-stem site</a></li>
+        </ul>
+      </div>
+    </article>
+  </section>
 
-    <section id="alpha-stem" class="section border-top">
-        <div class="content-wrap">
-            <h2 class="section-label trigger-anim">Alpha STEM</h2>
-            <div class="alpha-grid">
-                <div class="alpha-text trigger-anim">
-                    <h3>Founder & CEO</h3>
-                    <p>
-                        Founded a not-for-profit STEM outreach organization focused on building the pipeline of students 
-                        into science, technology, engineering, and mathematics. Leading a six-person leadership team and chapter 
-                        representatives across multiple area high schools.
-                    </p>
-                    <ul class="alpha-list">
-                        <li>
-                            <span class="alpha-label">STEM Bowl:</span>
-                            Organized inaugural event in 2026 for ~30 students. Planning expansion to a county-wide Science Bowl Circuit 
-                            with qualifying matches across multiple schools.
-                        </li>
-                        <li>
-                            <span class="alpha-label">CS Curriculum:</span>
-                            Authored curriculum on deep learning and generative AI for middle and high school students.
-                        </li>
-                        <li>
-                            <span class="alpha-label">Leadership:</span>
-                            Managing event logistics, curriculum deployment, and venue acquisition across growing set of school chapters.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- ── Contact ─────────────────────────────────────────────────────────
+       Email and profiles only. Do not add a phone number or a home address to
+       a public page — it gets scraped within days, and there is no upside. -->
+  <section class="wrap section" id="contact">
+    <div class="rail">
+      <p class="eyebrow">Contact</p>
+      <div>
+        <p>
+          Email is best. I'm interested in hearing from people working on
+          clinical machine learning, and from students who want to start an
+          Alpha STEM chapter.
+        </p>
+        <ul class="contact-list">
+          <li><a class="prose-link" href="mailto:arjunmadaan29@gmail.com" data-copy="arjunmadaan29@gmail.com">arjunmadaan29@gmail.com</a></li>
+          <li><a class="prose-link" href="https://kaggle.com/juniam" target="_blank" rel="noopener">kaggle.com/juniam</a></li>
+          <li><a class="prose-link" href="https://github.com/amadaan1" target="_blank" rel="noopener">github.com/amadaan1</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <section id="recognition" class="section border-top">
-        <div class="content-wrap">
-            <h2 class="section-label trigger-anim">Recognition & Skills</h2>
-            <div class="recognition-grid">
-                <div class="awards-column">
-                    <div class="award-item trigger-anim">
-                        <p class="award-medal">2nd Place</p>
-                        <h4>Virginia Junior Academy of Science</h4>
-                        <p class="award-cat">Mathematics, 9th Grade</p>
-                    </div>
-                    <div class="award-item trigger-anim">
-                        <p class="award-medal">Silver Medal</p>
-                        <h4>British Biology Olympiad</h4>
-                        <p class="award-cat">UK Biology Competitions</p>
-                    </div>
-                    <div class="award-item trigger-anim">
-                        <p class="award-medal">Best Delegate</p>
-                        <h4>Governor's School Model UN, Conf. XXVII</h4>
-                        <p class="award-cat">Special Political & Decolonization Committee</p>
-                    </div>
-                    <div class="award-item trigger-anim">
-                        <p class="award-medal">Bronze Medal</p>
-                        <h4>Kaggle Notebooks</h4>
-                        <p class="award-cat">Mental Health Diagnosis & FinAI</p>
-                    </div>
-                </div>
-                <div class="skills-column trigger-anim">
-                    <h3>Technical Skills</h3>
-                    <ul class="skills-list">
-                        <li>
-                            <span class="skill-name">Machine Learning & Generative AI</span>
-                            <span class="skill-desc">Including retrieval-augmented generation (RAG), applied across medical, physics, and financial datasets.</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">Prompt Engineering</span>
-                            <span class="skill-desc">Designing and tuning prompts to evaluate LLM performance on domain-specific, high-stakes tasks.</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">Explainable AI</span>
-                            <span class="skill-desc">Building evaluation frameworks that probe not just whether models are right, but how and why.</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+</main>
 
-    <section id="contact" class="section border-top">
-        <div class="content-wrap">
-            <h2 class="section-label trigger-anim">Contact</h2>
-            <div class="contact-grid trigger-anim">
-                <div class="contact-item">
-                    <span class="contact-label">Email</span>
-                    <a href="mailto:arjunmadaan29@gmail.com">arjunmadaan29@gmail.com</a>
-                </div>
-                <div class="contact-item">
-                    <span class="contact-label">Phone</span>
-                    <span>(804) 696-1234</span>
-                </div>
-                <div class="contact-item">
-                    <span class="contact-label">Kaggle</span>
-                    <a href="https://www.kaggle.com/juniam" target="_blank" rel="noopener">kaggle.com/juniam</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<footer class="footer">
+  <div class="wrap">
+    <p>Built by hand. Last updated <span data-updated>August 2026</span>.</p>
+  </div>
+</footer>
 
-    <footer>
-        <div class="footer-content">
-            <p class="footer-tagline">From equations to excellence.</p>
-            <p class="footer-credit">Richmond, Virginia · Built with honesty</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+<script src="site.js"></script>
 </body>
 </html>
