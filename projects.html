@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects — Arjun Madaan</title>
+<meta name="description" content="Projects: MCAIT, a ten-task benchmark for medical language models; Alpha STEM; and a comparison of vision architectures for melanoma detection.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="wordmark" href="index.html">Arjun Madaan</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">Index</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="research.html">Research</a>
+      <a href="notebooks.html">Notebooks</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero" style="padding-bottom:var(--s-4)">
+    <h1>Projects</h1>
+    <p class="lede">
+      Things I've built and shipped, with links so you can check them.
+    </p>
+  </section>
+
+  <section class="wrap section" style="padding-top:var(--s-4)">
+
+    <div class="rail"><p class="eyebrow">Record</p></div>
+
+    <!-- ══ TEMPLATE ══════════════════════════════════════════════════════
+         To add a project, copy the block below, paste it where you want it
+         in the order, and replace the text. Nothing else needs to change.
+
+         <article class="record rail" id="short-url-slug">
+           <div class="record__meta">
+             <p>YEAR</p>
+             <p>TYPE</p>
+             <p>ONE HARD NUMBER</p>
+           </div>
+           <div class="record__body">
+             <h3>Name</h3>
+             <p>What it is, what you did, what came out of it.</p>
+             <p class="tags">tool / tool / tool</p>
+             <ul class="links">
+               <li><a href="URL" target="_blank" rel="noopener">Label</a></li>
+             </ul>
+           </div>
+         </article>
+
+         The id is what makes deep links work: projects.html#mcait scrolls
+         straight to that record. Keep ids lowercase with hyphens, and don't
+         change one once you've shared the link anywhere.
+         ═══════════════════════════════════════════════════════════════════ -->
+
+    <article class="record rail" id="mcait">
+      <div class="record__meta">
+        <p>May 2026</p>
+        <p>Benchmark</p>
+        <p>37 models</p>
+        <p>10 tasks</p>
+      </div>
+      <div class="record__body">
+        <h3>MCAIT — Medical and Cross-disciplinary AI Test</h3>
+        <p>
+          Medical language models are usually scored on multiple-choice exam
+          questions. That measures recall, not whether a model is safe to put
+          in front of a patient. MCAIT is a ten-task suite that tries to
+          measure the second thing: diagnostic reasoning, scientific knowledge,
+          ethical judgement, and patient interaction, including agentic
+          simulations where the model has to conduct a conversation rather than
+          answer a prompt.
+        </p>
+        <p>
+          I designed the task set and scoring, implemented the harness, and ran
+          it across 37 models. The full suite is published as public Kaggle
+          notebooks so the runs can be reproduced and the scoring inspected.
+        </p>
+        <p class="tags">Python / Kaggle / LLM evaluation / agentic simulation</p>
+        <ul class="links">
+          <li><a href="https://kaggle.com/juniam" target="_blank" rel="noopener">Notebooks on Kaggle</a></li>
+        </ul>
+        <!-- Replace the link above with the direct MCAIT notebook URL. A link
+             to your profile makes a reader hunt; a link to the artefact does
+             not. Every claim on this page should be one click from proof. -->
+      </div>
+    </article>
+
+    <article class="record rail" id="melanoma">
+      <div class="record__meta">
+        <p>June 2026</p>
+        <p>Model comparison</p>
+        <p>Stanford AI4ALL</p>
+      </div>
+      <div class="record__body">
+        <h3>Vision transformers vs. convolutional networks for melanoma detection</h3>
+        <p>
+          Work in the medical AI research group at Stanford AI4ALL, run by the
+          Institute for Human-Centered AI and the Stanford AI Lab. I compared
+          how vision transformer and CNN architectures behave on melanoma
+          classification — where the two families differ on limited,
+          class-imbalanced dermatological image data, and what that implies
+          about deploying either one in a screening setting.
+        </p>
+        <p class="tags">PyTorch / ViT / CNN / medical imaging</p>
+      </div>
+    </article>
+
+    <article class="record rail" id="alpha-stem">
+      <div class="record__meta">
+        <p>April 2026—</p>
+        <p>Organisation</p>
+        <p>5 schools</p>
+        <p class="record__status">Active</p>
+      </div>
+      <div class="record__body">
+        <h3>Alpha STEM</h3>
+        <p>
+          A student-led STEM outreach group I founded and run. The chapter at
+          Godwin is active and chapters are forming at Deep Run, Moody, Tucker
+          and Freeman. Our first STEM Bowl drew 28 students from four schools.
+        </p>
+        <p>
+          Most of the job is unglamorous: recruiting chapter leads, writing
+          question sets, booking rooms, and keeping the schools coordinated
+          with each other.
+        </p>
+        <ul class="links">
+          <li><a href="https://amadaan1.github.io/alpha-stem" target="_blank" rel="noopener">alpha-stem.github.io</a></li>
+        </ul>
+      </div>
+    </article>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p><a href="index.html">Index</a> · <a href="mailto:arjunmadaan29@gmail.com">arjunmadaan29@gmail.com</a></p>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research — Arjun Madaan</title>
+<meta name="description" content="Research: physics-informed liquid neural networks for early sepsis prediction, modelling work on the Collatz conjecture, and an evaluation of LLM accuracy on physics problems.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="wordmark" href="index.html">Arjun Madaan</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">Index</a>
+      <a href="projects.html">Projects</a>
+      <a href="research.html" aria-current="page">Research</a>
+      <a href="notebooks.html">Notebooks</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero" style="padding-bottom:var(--s-4)">
+    <h1>Research</h1>
+    <p class="lede">
+      Open questions I've worked on, including one that isn't finished. Status
+      is stated on each.
+    </p>
+  </section>
+
+  <section class="wrap section" style="padding-top:var(--s-4)">
+
+    <div class="rail"><p class="eyebrow">Record</p></div>
+
+    <article class="record rail" id="pilnn">
+      <div class="record__meta">
+        <p>2026—</p>
+        <p>Independent</p>
+        <p>VCU mentorship</p>
+        <p class="record__status">In progress</p>
+      </div>
+      <div class="record__body">
+        <h3>Physics-informed liquid neural networks for early sepsis prediction</h3>
+        <p>
+          Sepsis is survivable if it's caught early, and the signal is present
+          in vitals hours before a clinician would call it. The modelling
+          problem is unpleasant in three specific ways: the time series are
+          irregularly sampled, the physiology is continuous while the records
+          are not, and the positive class is rare enough that a model can score
+          well by predicting that nobody is ever septic.
+        </p>
+        <p>
+          I'm working on a hybrid architecture that pairs a liquid neural
+          network — whose hidden state evolves as a differential equation, so
+          it handles irregular sampling natively — with physics-informed
+          constraints that penalise physiologically impossible trajectories.
+          The hypothesis is that encoding what bodies can and cannot do reduces
+          how much labelled data the model needs to learn the rest.
+        </p>
+        <p>
+          This is independent research under the mentorship of a professor at
+          Virginia Commonwealth University. It is ongoing; I don't have results
+          to report yet, and I'll publish them here when I do.
+        </p>
+        <!-- Once you have permission from your mentor, replace the phrase
+             above with his name and department. A named mentor is far more
+             credible than an anonymous one — but ask first. -->
+        <p class="tags">Liquid neural networks / physics-informed ML / clinical time series / class imbalance</p>
+      </div>
+    </article>
+
+    <article class="record rail" id="collatz">
+      <div class="record__meta">
+        <p>2026</p>
+        <p>Science fair</p>
+        <p>2nd, state level</p>
+      </div>
+      <div class="record__body">
+        <h3>Modelling work on the Collatz conjecture</h3>
+        <p>
+          Computational and modelling work on the Collatz conjecture, presented
+          at the Virginia Junior Academy of Science 2026 symposium, where it
+          placed second in Mathematics: Theoretical and Modeling.
+        </p>
+        <!-- Fill in one concrete sentence about what you actually did and what
+             you found — the approach, and the result. Right now this record
+             describes an award rather than a finding, which is the weakest
+             kind of research entry. A reader wants to know what you learned
+             about Collatz, not what ribbon it won. -->
+        <p class="tags">Number theory / computational modelling</p>
+      </div>
+    </article>
+
+    <article class="record rail" id="llm-physics">
+      <div class="record__meta">
+        <p>July 2025</p>
+        <p>Brown Pre-College</p>
+        <p>Group lead</p>
+      </div>
+      <div class="record__body">
+        <h3>Sampling temperature and LLM accuracy on physics problems</h3>
+        <p>
+          During Brown's Smartphone and Computational Physics program, I led a
+          group studying how sampling temperature affects the accuracy of
+          language models on complex physics problems — the trade between
+          deterministic decoding and the exploration that multi-step reasoning
+          sometimes needs. I chose the topic and directed the group's work.
+        </p>
+        <p>
+          The instructor, Professor Renuka Rajapakse of UMass Dartmouth, wrote
+          in our performance report that the group presented an excellent
+          evaluation of how well generative AI solved complex physics problems,
+          and that the findings were useful to him as a physics teacher.
+        </p>
+        <!-- Keep any quotation short and accurate, and only quote people who
+             wrote the words about you in an official report. If you'd rather
+             not quote him at all, describing the feedback in your own words
+             (as the first half of that sentence does) is just as strong. -->
+        <p class="tags">LLM evaluation / computational physics / Python</p>
+      </div>
+    </article>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p><a href="index.html">Index</a> · <a href="mailto:arjunmadaan29@gmail.com">arjunmadaan29@gmail.com</a></p>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
