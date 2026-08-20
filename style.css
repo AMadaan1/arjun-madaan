@@ -1,504 +1,473 @@
+/* ===========================================================================
+   arjun-madaan.github.io — stylesheet
+   ---------------------------------------------------------------------------
+   Organised so you can find things fast:
+     1. Tokens          — every colour/size lives here, nowhere else
+     2. Base            — reset + document defaults
+     3. Typography      — the type scale
+     4. Layout          — the two-column "rail" grid used site-wide
+     5. Header / nav
+     6. Hero + trace    — the waveform graphic
+     7. Records         — the repeating content block (projects, research, etc.)
+     8. Small parts     — links, tags, buttons, footer
+     9. Motion & print
+   =========================================================================== */
+
+
+/* 1. TOKENS =================================================================
+   Rule to keep: never write a raw hex value below this block. If you want to
+   change the whole site's colour, you change it once, here.
+
+   Palette logic: this is a monitor printout, not a portfolio. Cool grey-blue
+   paper (not cream), ink with a blue cast (not pure black), hairline rules,
+   and ONE accent — amber — used the way amber is used clinically: to mean
+   "signal" or "attention". It appears on the waveform, on link underlines and
+   on section markers. Nowhere else. That restraint is what keeps it looking
+   deliberate instead of decorated.
+   ------------------------------------------------------------------------- */
 :root {
-    --bg-color: #FAF9F6;
-    --text-main: #1A1918;
-    --text-muted: #6B6A68;
-    --accent-color: #C05B4D;
-    --border-color: rgba(0, 0, 0, 0.08);
+  --paper:      #EDF0F2;   /* page background            */
+  --paper-2:    #E3E8EB;   /* recessed panels, code      */
+  --ink:        #0F171D;   /* primary text               */
+  --ink-muted:  #56646F;   /* metadata, captions         */
+  --rule:       #C9D2D8;   /* hairlines and borders      */
+  --signal:     #D98A00;   /* accent: graphics only      */
+  --signal-ink: #8A5800;   /* accent: text only — see note */
+
+  /* Why two ambers: #D98A00 on this paper is about 2.4:1 contrast, which is
+     fine for a 2px line but fails WCAG for text (needs 4.5:1). --signal-ink is
+     the darkened version, ~4.9:1, used whenever the accent carries words.
+     Same colour identity, two jobs, both legible. */
+
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-body:    "Newsreader", ui-serif, Georgia, serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* One spacing scale, roughly 1.5×. Using a scale instead of arbitrary
+     numbers is what makes a layout feel tuned rather than assembled. */
+  --s-1: 0.5rem;
+  --s-2: 0.75rem;
+  --s-3: 1.25rem;
+  --s-4: 2rem;
+  --s-5: 3.25rem;
+  --s-6: 5rem;
+  --s-7: 8rem;
+
+  --measure: 40rem;  /* max prose width — keeps lines at ~70 characters */
 }
 
-html.lenis { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: hidden; }
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Dark mode follows the OS setting. Because every colour is a token, the
+   entire site re-themes in twelve lines. The amber brightens because a dark
+   background needs a lighter accent to hold the same perceived weight. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:      #0E1418;
+    --paper-2:    #161F26;
+    --ink:        #E6ECEF;
+    --ink-muted:  #8FA0AC;
+    --rule:       #253039;
+    --signal:     #F0A92B;
+    --signal-ink: #F0A92B;  /* already ~9:1 on dark paper, no darkening needed */
+  }
 }
+
+
+/* 2. BASE =================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;      /* 17px — serif body needs slightly more size */
+  line-height: 1.65;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-::selection {
-    background-color: rgba(26, 25, 24, 0.1);
-    color: var(--text-main);
+img, svg { display: block; max-width: 100%; }
+
+/* Keyboard focus must always be visible. Never delete this. */
+:focus-visible {
+  outline: 2px solid var(--signal-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-/* --- NAVIGATION --- */
-nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 1.5rem 4vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-    background: rgba(250, 249, 246, 0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border-color);
+/* Skip link for screen-reader and keyboard users: hidden until focused. */
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--ink); color: var(--paper);
+  padding: var(--s-2) var(--s-3);
+  font-family: var(--font-mono); font-size: 0.8rem;
+}
+.skip:focus { left: var(--s-3); top: var(--s-3); z-index: 10; }
+
+
+/* 3. TYPOGRAPHY =============================================================
+   The inversion: grotesque for headings, serif for prose. Most technical
+   portfolios do the opposite. Headings are set tight (negative tracking, sub-1
+   line-height) so they read as a printed label; prose is set loose so it reads
+   as something you'd actually sit and read.
+   ------------------------------------------------------------------------- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;   /* stops one word dangling on its own line */
 }
 
-.logo {
-    font-family: 'Newsreader', serif;
-    font-weight: 500;
-    font-size: 1.15rem;
-    letter-spacing: -0.02em;
-}
+/* clamp(min, preferred, max) = fluid type without media queries. The middle
+   value is viewport-relative, so it scales continuously between the bounds. */
+h1 { font-size: clamp(2.75rem, 7.5vw, 5rem); }
+h2 { font-size: clamp(1.5rem, 3.2vw, 2.05rem); }
+h3 { font-size: 1.2rem; letter-spacing: -0.015em; }
 
-nav .links {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
+p { margin: 0 0 var(--s-3); max-width: var(--measure); }
+p:last-child { margin-bottom: 0; }
 
-nav .links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 400;
-    transition: color 0.3s ease;
-}
+strong { font-weight: 600; }
 
-nav .links a:hover {
-    color: var(--text-main);
-}
-
-.kaggle-btn {
-    border: 1px solid var(--border-color);
-    padding: 0.4rem 1rem;
-    border-radius: 2px;
-    color: var(--accent-color) !important;
-    font-weight: 500;
-}
-
-/* --- HERO --- */
-.hero {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    padding: 0 4vw;
-    padding-top: 100px;
-}
-
-.hero-wrapper {
-    max-width: 900px;
-}
-
+/* The mono "eyebrow" — small uppercase labels that name what a block is.
+   These earn their place: every one labels a real category, none is
+   decorative numbering. */
 .eyebrow {
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 var(--s-2);
 }
 
-.title {
-    font-family: 'Newsreader', serif;
-    font-size: clamp(2.2rem, 5vw, 4rem);
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin-bottom: 3rem;
-    color: var(--text-main);
+.lede {
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 34rem;
 }
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 3rem;
-    border-top: 1px solid var(--border-color);
-    padding-top: 2rem;
+.muted { color: var(--ink-muted); }
+
+
+/* 4. LAYOUT =================================================================
+   Two primitives do all the work.
+
+   .wrap   — horizontal container, centred, with fluid gutters.
+   .rail   — the asymmetric grid: a narrow left column for metadata and a wide
+             right column for content. This is the structural idea of the site.
+             Dates, tags and counts live left; prose lives right. A reader can
+             scan the left column alone and get the shape of your work.
+
+   On narrow screens the rail collapses to one column and the metadata sits
+   above its content, which is the correct reading order.
+   ------------------------------------------------------------------------- */
+.wrap {
+  max-width: 66rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 3.5rem);
 }
 
-.stat-card h3 {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-main);
-    margin-bottom: 0.5rem;
+.rail {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, var(--measure));
+  column-gap: var(--s-5);
 }
 
-.stat-card p {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+@media (max-width: 46em) {
+  .rail { grid-template-columns: 1fr; row-gap: var(--s-2); }
 }
 
-/* --- SECTIONS --- */
-.section {
-    padding: 5vw 4vw;
-    max-width: 1200px;
-    margin: 0 auto;
+/* Vertical rhythm between major sections. A single class controls it, so the
+   whole page's breathing can be retuned from one place. */
+.section { padding-block: var(--s-6); }
+.section + .section { border-top: 1px solid var(--rule); }
+
+
+/* 5. HEADER / NAV =========================================================== */
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  padding-block: var(--s-3);
 }
 
-.border-top {
-    border-top: 1px solid var(--border-color);
+.masthead__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-4);
 }
 
-.section-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
-    color: var(--text-main);
-    margin-bottom: 2.5rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+.wordmark {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+.wordmark:hover { color: var(--signal-ink); }
+
+.nav { display: flex; gap: var(--s-3); flex-wrap: wrap; }
+
+.nav a {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+.nav a:hover { color: var(--ink); border-bottom-color: var(--rule); }
+
+/* aria-current="page" is set in the HTML on each page's own nav link. Styling
+   the ARIA attribute rather than an extra class means the visual state and the
+   accessibility state can never drift apart. */
+.nav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--signal);
 }
 
-.content-wrap {
-    max-width: 900px;
+
+/* 6. HERO + TRACE ===========================================================
+   The signature element. Two stacked paths: a thin noisy "raw" channel and a
+   heavier smoothed line over it — a model reading a physiological signal. The
+   dashed amber rule is a threshold.
+
+   It is illustrative, not real data, and it is labelled as such on the page.
+   Never present a generated graphic as a result.
+   ------------------------------------------------------------------------- */
+.hero { padding-block: var(--s-6) var(--s-5); }
+
+.hero h1 { margin-bottom: var(--s-3); }
+
+.hero__lede { margin-bottom: var(--s-4); }
+
+.trace {
+  width: 100%;
+  height: auto;
+  margin-block: var(--s-4) var(--s-1);
+  overflow: visible;
 }
 
-/* --- THESIS --- */
-.large-text {
-    font-family: 'Newsreader', serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    line-height: 1.35;
-    letter-spacing: -0.01em;
-    max-width: 950px;
-    font-weight: 300;
+.trace__raw {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1.25;
 }
 
-.large-text span {
-    color: #D3D3D3;
-    transition: color 0.4s ease;
+.trace__model {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
 }
 
-/* --- RESEARCH --- */
-.research-intro {
-    margin-bottom: 3rem;
-    color: var(--text-muted);
-    line-height: 1.8;
-    max-width: 800px;
+.trace__threshold {
+  stroke: var(--signal);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
 }
 
-.research-card {
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    padding: 2rem;
-    border-radius: 4px;
+/* pathLength="1" is set on the paths in the HTML. That normalises every path
+   to a length of exactly 1 regardless of its real geometry, so one animation
+   works for both lines without measuring them in JavaScript. */
+.trace path[pathLength] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.6s cubic-bezier(0.4, 0, 0.15, 1) forwards;
+}
+.trace .trace__model { animation-delay: 0.25s; }
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+.trace__caption {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0;
+  max-width: none;
 }
 
-.research-card h3 {
-    font-family: 'Newsreader', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.01em;
+
+/* 7. RECORDS ================================================================
+   The repeating block used on every content page. To add a project you copy
+   one <article class="record"> in the HTML and change the words — no CSS edit.
+   That is the whole maintenance story for this site.
+   ------------------------------------------------------------------------- */
+.record { padding-block: var(--s-4); }
+.record + .record { border-top: 1px solid var(--rule); }
+
+.record__meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+.record__meta p { margin: 0; max-width: none; }
+
+/* On mobile the metadata lines run inline instead of stacking, so they read as
+   one compact line of context rather than a tall list. */
+@media (max-width: 46em) {
+  .record__meta { display: flex; flex-wrap: wrap; gap: 0 var(--s-2); }
+  .record__meta p:not(:last-child)::after { content: " ·"; color: var(--rule); }
 }
 
-.research-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--border-color);
+.record__body h3 { margin-bottom: var(--s-2); }
+
+.record__status {
+  color: var(--signal-ink);
+  font-weight: 500;
 }
 
-.meta-item {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+
+/* 8. SMALL PARTS ============================================================ */
+
+/* Prose links: the underline is amber, the text stays ink. This is how the
+   accent appears in running text without failing contrast — the colour is
+   carried by the rule, the legibility by the ink. */
+.prose-link, .record__body a, .lede a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--signal);
+  padding-bottom: 1px;
+  transition: background-color 0.15s ease;
+}
+.prose-link:hover, .record__body a:hover, .lede a:hover {
+  background-color: color-mix(in srgb, var(--signal) 18%, transparent);
 }
 
-.research-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+/* Link list under a record — outbound, verifiable references. */
+.links {
+  list-style: none;
+  margin: var(--s-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-3);
+}
+.links li { margin: 0; }
+.links a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 2px;
+}
+.links a:hover { color: var(--ink); border-bottom-color: var(--signal); }
+
+/* The ↗ marks a link that leaves the site. Generated in CSS so you can't
+   forget it and can't get it inconsistent. */
+.links a[target="_blank"]::after { content: " ↗"; letter-spacing: 0; }
+
+/* Tags: plain text in mono, separated by slashes. No pills, no chips, no
+   rounded rectangles — those read as UI kit, and this is a document. */
+.tags {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.03em;
+  margin-top: var(--s-2);
 }
 
-.detail-item {
-    display: flex;
-    flex-direction: column;
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4) var(--s-5);
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--rule);
 }
 
-.detail-label {
-    font-weight: 500;
-    font-size: 0.9rem;
-    color: var(--text-main);
-    margin-bottom: 0.5rem;
+.stat { margin: 0; }
+.stat b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;  /* digits align in a column */
+}
+.stat span {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 
-.detail-text {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.7;
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--s-3) 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 2.1;
 }
 
-@media (max-width: 700px) {
-    .research-details {
-        grid-template-columns: 1fr;
-    }
+/* Created by site.js, never present in the HTML — so it can't appear as a dead
+   control if JavaScript fails. Sized to match the mono text it sits beside. */
+.copy-btn {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 1px 6px;
+  margin-left: var(--s-2);
+  cursor: pointer;
+}
+.copy-btn:hover { color: var(--ink); border-color: var(--signal); }
+
+.footer {
+  border-top: 1px solid var(--rule);
+  padding-block: var(--s-4) var(--s-5);
+  margin-top: var(--s-5);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+.footer a { color: inherit; }
+
+
+/* 9. MOTION & PRINT =========================================================
+   Anyone who has asked their OS to reduce motion gets the finished state
+   immediately. The graphic is still fully visible — nothing is hidden, it just
+   doesn't animate. Honour this; some people get migraines or motion sickness.
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .trace path[pathLength] {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+  }
 }
 
-/* --- PROJECTS --- */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-}
-
-.project-card {
-    border: 1px solid var(--border-color);
-    padding: 2rem;
-    border-radius: 4px;
-    background: var(--bg-color);
-    display: flex;
-    flex-direction: column;
-}
-
-.project-tag {
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-    font-weight: 500;
-}
-
-.project-card h3 {
-    font-family: 'Newsreader', serif;
-    font-size: 1.3rem;
-    font-weight: 400;
-    margin-bottom: 1rem;
-    letter-spacing: -0.01em;
-}
-
-.project-desc {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    flex-grow: 1;
-}
-
-.project-link {
-    display: inline-block;
-    font-size: 0.85rem;
-    color: var(--accent-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.project-link:hover {
-    color: var(--text-main);
-}
-
-/* --- ALPHA STEM --- */
-.alpha-grid {
-    max-width: 800px;
-}
-
-.alpha-text h3 {
-    font-family: 'Newsreader', serif;
-    font-size: 1.8rem;
-    font-weight: 400;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.01em;
-}
-
-.alpha-text p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-}
-
-.alpha-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.alpha-list li {
-    padding-left: 1.5rem;
-    position: relative;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    line-height: 1.7;
-}
-
-.alpha-list li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: var(--accent-color);
-    font-weight: bold;
-}
-
-.alpha-label {
-    color: var(--text-main);
-    font-weight: 500;
-}
-
-/* --- RECOGNITION --- */
-.recognition-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-}
-
-.awards-column {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-}
-
-.award-item {
-    border: 1px solid var(--border-color);
-    padding: 1.5rem;
-    border-radius: 4px;
-    background: var(--bg-color);
-}
-
-.award-medal {
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent-color);
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-.award-item h4 {
-    font-family: 'Newsreader', serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.01em;
-}
-
-.award-cat {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-
-.skills-column h3 {
-    font-family: 'Newsreader', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    margin-bottom: 2rem;
-    letter-spacing: -0.01em;
-}
-
-.skills-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.skills-list li {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.skill-name {
-    font-weight: 500;
-    font-size: 0.95rem;
-    color: var(--text-main);
-}
-
-.skill-desc {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-}
-
-@media (max-width: 800px) {
-    .recognition-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* --- CONTACT --- */
-.contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
-    max-width: 800px;
-}
-
-.contact-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.contact-label {
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-.contact-item a {
-    font-size: 0.95rem;
-    color: var(--accent-color);
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.contact-item a:hover {
-    color: var(--text-main);
-}
-
-.contact-item span {
-    font-size: 0.95rem;
-    color: var(--text-main);
-}
-
-/* --- FOOTER --- */
-footer {
-    padding: 3rem 4vw;
-    border-top: 1px solid var(--border-color);
-    text-align: center;
-}
-
-.footer-content {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.footer-tagline {
-    font-family: 'Newsreader', serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--text-main);
-    margin-bottom: 1rem;
-}
-
-.footer-credit {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-
-/* --- ANIMATIONS --- */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.load-anim {
-    animation: fadeInUp 0.8s ease-out;
-}
-
-.trigger-anim {
-    opacity: 0;
+@media print {
+  :root { --paper: #fff; --ink: #000; --ink-muted: #444; --rule: #bbb; }
+  .masthead, .footer, .trace { display: none; }
+  .section { padding-block: 1.5rem; border-top: 1px solid var(--rule); }
+  a { text-decoration: underline; border: 0; }
 }
