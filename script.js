@@ -1,82 +1,69 @@
-gsap.registerPlugin(ScrollTrigger);
+/* ===========================================================================
+   site.js
+   ---------------------------------------------------------------------------
+   Deliberately small. Every page works completely with JavaScript disabled —
+   the content is real HTML, the layout is CSS, the animation is CSS. This file
+   only adds convenience on top. If you ever find yourself moving content into
+   JavaScript, stop: search engines, screen readers and people on bad
+   connections all do better with content in the HTML.
 
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    mouseMultiplier: 1,
-    smoothTouch: false,
-    touchMultiplier: 2,
-});
+   Two jobs:
+     1. Mark outbound links so they open in a new tab, safely.
+     2. Let people copy your email with one click.
+   =========================================================================== */
 
-lenis.on('scroll', ScrollTrigger.update);
+(function () {
+  "use strict";
 
-gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-});
+  /* 1. OUTBOUND LINKS ------------------------------------------------------
+     Any link pointing at a different host gets target="_blank" plus
+     rel="noopener". noopener matters: without it, the page you open can reach
+     back into yours through window.opener. It's a real (if small) security
+     hole, and it's the kind of thing that's easy to forget by hand — so it's
+     done here instead of trusted to memory.
 
-gsap.ticker.lagSmoothing(0);
+     Setting target here also triggers the ↗ arrow in styles.css, which keys
+     off [target="_blank"]. One source of truth. */
+  document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+    if (link.host !== window.location.host) {
+      link.target = "_blank";
+      link.rel = "noopener";
+    }
+  });
 
-// Hero animation
-const tl = gsap.timeline();
-tl.fromTo(".load-anim",
-    { y: 30, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power3.out", delay: 0.2 }
-);
+  /* 2. COPY EMAIL ----------------------------------------------------------
+     Progressive enhancement done properly: the button does not exist in the
+     HTML. It's created here, so if JavaScript fails there's no dead button on
+     the page — just the mailto link, which already worked.
 
-// Scroll reveal for section elements
-const triggerElements = document.querySelectorAll('.trigger-anim');
-triggerElements.forEach((el) => {
-    gsap.fromTo(el,
-        { y: 40, opacity: 0 },
-        {
-            y: 0,
-            opacity: 1,
-            duration: 1.2,
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: el,
-                start: "top 85%",
-                toggleActions: "play none none reverse"
-            }
-        }
-    );
-});
+     To use it, give any element data-copy="the text to copy". */
+  document.querySelectorAll("[data-copy]").forEach(function (el) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "copy-btn";
+    button.textContent = "copy";
+    button.setAttribute("aria-label", "Copy " + el.dataset.copy + " to clipboard");
 
-// Split text reveal for thesis section
-const splitText = document.querySelector('.split-text');
-if (splitText) {
-    const text = splitText.innerText;
-    splitText.innerHTML = '';
-
-    text.split(' ').forEach(word => {
-        const span = document.createElement('span');
-        span.innerText = word + ' ';
-        splitText.appendChild(span);
+    button.addEventListener("click", async function () {
+      try {
+        await navigator.clipboard.writeText(el.dataset.copy);
+        button.textContent = "copied";
+      } catch (err) {
+        /* Clipboard access can be refused — insecure context, or the user
+           denied permission. Say what happened rather than failing silently
+           or pretending it worked. */
+        button.textContent = "copy failed";
+      }
+      setTimeout(function () { button.textContent = "copy"; }, 2000);
     });
 
-    gsap.to('.split-text span', {
-        color: '#1A1918',
-        stagger: 0.05,
-        ease: "none",
-        scrollTrigger: {
-            trigger: ".thesis-content",
-            start: "top 75%",
-            end: "bottom 65%",
-            scrub: 1
-        }
-    });
-}
+    el.insertAdjacentElement("afterend", button);
+  });
 
-// Smooth navigation scroll
-document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            lenis.scrollTo(target, { duration: 1.5 });
-        }
-    });
-});
+  /* Note on what is deliberately NOT here:
+
+     No auto-updating "last updated" date. It would be trivial to write
+     today's date into the footer on every page load, and it would be a lie —
+     the page would claim to be current on a day you hadn't touched it. Edit
+     that date by hand when you actually change something. */
+})();
